@@ -17,11 +17,9 @@ from .. import CONF_BROAN_ID, BroanComponent, broan_ns
 
 FanSpeedNumber = broan_ns.class_("FanSpeedNumber", number.Number)
 HumiditySetpointNumber = broan_ns.class_("HumiditySetpointNumber", number.Number)
-CurrentHumidityNumber = broan_ns.class_("CurrentHumidityNumber", number.Number)
 
 CONF_FAN_SPEED = "fan_speed"
 CONF_HUMIDITY_SETPOINT = "humidity_setpoint"
-CONF_CURRENT_HUMIDITY = "current_humidity"
 
 CONFIG_SCHEMA = cv.Schema(
     {
@@ -35,13 +33,6 @@ CONFIG_SCHEMA = cv.Schema(
         ),
         cv.Optional(CONF_HUMIDITY_SETPOINT): number.number_schema(
             HumiditySetpointNumber,
-            device_class=DEVICE_CLASS_HUMIDITY,
-            entity_category=ENTITY_CATEGORY_CONFIG,
-            unit_of_measurement=UNIT_PERCENT,
-            icon=ICON_WATER,
-        ),
-        cv.Optional(CONF_CURRENT_HUMIDITY): number.number_schema(
-            CurrentHumidityNumber,
             device_class=DEVICE_CLASS_HUMIDITY,
             entity_category=ENTITY_CATEGORY_CONFIG,
             unit_of_measurement=UNIT_PERCENT,
@@ -67,10 +58,3 @@ async def to_code(config):
         )
         await cg.register_parented(h, config[CONF_BROAN_ID])
         cg.add(broan_component.set_humidity_setpoint_number(h))
-
-    if current_humidity_config := config.get(CONF_CURRENT_HUMIDITY):
-        h = await number.new_number(
-            current_humidity_config, min_value=0, max_value=100, step=0.1
-        )
-        await cg.register_parented(h, config[CONF_BROAN_ID])
-        cg.add(broan_component.set_current_humidity_number(h))
