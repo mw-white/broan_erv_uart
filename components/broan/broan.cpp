@@ -375,9 +375,6 @@ void BroanComponent::parseBroanFields(const std::vector<uint8_t>& message)
 			case BroanField::TargetHumidityA:
 			  humidity_setpoint_number_->publish_state(pField->m_value.m_flValue);
 				break;
-			case BroanField::ControllerHumidity:
-			  current_humidity_number_->publish_state(pField->m_value.m_flValue);
-				break;
 			case BroanField::HumidityControl:
 			  humidity_control_switch_->publish_state(pField->m_value.m_chValue==1);
 				break;

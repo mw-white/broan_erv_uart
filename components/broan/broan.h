@@ -164,7 +164,6 @@ class BroanComponent : public Component, public uart::UARTDevice
 #ifdef USE_NUMBER
 	SUB_NUMBER(fan_speed)
 	SUB_NUMBER(humidity_setpoint)
-	SUB_NUMBER(current_humidity)
 #endif
 
 #ifdef USE_BUTTON

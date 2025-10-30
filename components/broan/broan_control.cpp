@@ -139,9 +139,10 @@ void BroanComponent::setHumiditySetpoint( float humidity ) {
 
 void BroanComponent::setCurrentHumidity( float humidity ) {
 	std::vector<BroanField_t> vecFields;
+  
+	ESP_LOGI("broan_control", "Set current humidity: %0.1f%%", humidity);
 
 	vecFields.push_back( m_vecFields[ControllerHumidity].copyForUpdate( humidity ) );
-
 	m_vecFields[ControllerHumidity].markDirty();
 
 	writeRegisters( vecFields );
